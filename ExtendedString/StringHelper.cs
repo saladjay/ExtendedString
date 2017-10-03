@@ -81,5 +81,32 @@ namespace ExtendedString
             }
             return ByteArray;
         }
+
+        public static string CStrRemoveNullandEmptyAndReturn(this string _input)
+        {
+            StringBuilder stringBuilder=new StringBuilder();
+            byte[] ping=Encoding.UTF8.GetBytes(_input);
+            Queue<byte> queue=new Queue<byte>();
+            foreach (byte item in ping)
+	        {
+                if (item!=0x00&&item!=0x0a&&item!=0x20)
+	            {
+                    queue.Enqueue(item);
+	            }
+	        }
+            if(queue.Count%3==0)
+            {
+                byte[] resultPing=new byte[3];
+                while (queue.Count!=0)
+			    {
+                    resultPing[0]=queue.Dequeue();
+                    resultPing[1]=queue.Dequeue();
+                    resultPing[2]=queue.Dequeue();
+                    stringBuilder.Append(Encoding.UTF8.GetString(resultPing));
+			    }
+                return stringBuilder.ToString();
+            }
+            return stringBuilder.ToString();
+        }
     }
 }
