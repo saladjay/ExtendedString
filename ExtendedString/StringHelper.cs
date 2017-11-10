@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace ExtendedString
 {
@@ -24,7 +24,7 @@ namespace ExtendedString
         /// <returns></returns>
         public static string Append(this string _input,string str)
         {
-            return _input += str;
+            return new StringBuilder(_input).Append(str).ToString();
         }
         /// <summary>
         /// Appends the char ch onto the end of this string.
@@ -34,7 +34,7 @@ namespace ExtendedString
         /// <returns></returns>
         public static string Append(this string _input,char ch)
         {
-            return _input += ch;
+            return new StringBuilder(_input).Append(ch).ToString();
         }
 
         /// <summary>
@@ -47,11 +47,22 @@ namespace ExtendedString
         /// <returns></returns>
         public static string LeftJustified(this string _input,int width,char fill)
         {
-            if (_input.Length > width)
-                return null;
-            while (_input.Length < width)
-                _input += fill;
-            return _input;
+            if (_input.Length >= width)
+                return _input;
+            else
+            {
+                return new StringBuilder(_input).Append(fill, width - _input.Length).ToString();
+            }
+        }
+
+        public static string RightJustified(this string _input,int width,char fill)
+        {
+            if (_input.Length >= width)
+                return _input;
+            else
+            {
+                return new StringBuilder(new string(fill, width - _input.Length)).Append(_input).ToString();
+            }
         }
         /// <summary>
         /// return byte array of the string
